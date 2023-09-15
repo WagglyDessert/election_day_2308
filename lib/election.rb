@@ -25,4 +25,11 @@ class Election
     hash
   end
 
+  def winners
+    @winners = []
+    @races.each do |race|
+      @winners << race.winner if race.open == false && race.tie? == false
+    end
+    @winners
+  end
 end

@@ -19,22 +19,23 @@ class Race
   end
 
   def winner
-    @vote_count_array = []
-    @candidate_name_array = []
+    vote_count_array = []
+    candidate_name_array = []
     @candidates.each do |candidate|
-      @vote_count_array << candidate.votes
+      vote_count_array << candidate.votes
     end
     @candidates.each do |candidate|
-      @candidate_name_array << candidate.name
+      candidate_name_array << candidate.name
     end
     if @open == true
       return false
     elsif
-      @vote_count_array.sum == 0
+      vote_count_array.sum == 0
       return "tie"
     else
-      index = @vote_count_array.find_index(@vote_count_array.max)
-      return @candidate_name_array[index]
+      index = vote_count_array.find_index(vote_count_array.max)
+      winner = candidate_name_array[index]
+      return winner
     end
   end
 

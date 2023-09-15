@@ -22,11 +22,11 @@ RSpec.describe "#Candidate set up" do
   it 'has a winner' do
     @race_1.register_candidate!(@candidate_1)
     @race_1.register_candidate!(@candidate_2)
-    #require 'pry';binding.pry
     expect(@race_1.winner).to eq(false)
     @race_1.close!
     expect(@race_1.winner).to eq("tie")
     @candidate_1.vote_for!
+    #require 'pry';binding.pry
     expect(@race_1.winner).to eq(@candidate_1.name)
   end
 
@@ -35,5 +35,19 @@ RSpec.describe "#Candidate set up" do
     @race_1.register_candidate!(@candidate_2)
     @race_1.close!
     expect(@race_1.tie?).to eq(true)
+  end
+
+  it 'holds an array of winning candidates' do
+    @election.add_races(@race_1)
+    @race_1.register_candidate!(@candidate_1)
+    @race_1.register_candidate!(@candidate_2)
+    expect(@election.winners).to eq([])
+    @race_1.close!
+    expect(@election.winners).to eq([])
+    @candidate_1.vote_for!
+    @race_1.close!
+    expect(@race_1.winner).to eq(@candidate_1.name)
+    #require 'pry';binding.pry
+    expect(@election.winners).to eq([@candidate_1.name])
   end
 end

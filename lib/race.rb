@@ -19,19 +19,27 @@ class Race
   end
 
   def winner
-    if @open == true
-      winner = false
-    else 
-      @candidates.map do |candidate|
-        @vote_count_array = candidate.votes
-      end
-      if 
-        @vote_count_array.nonzero? == nil
-        winner = "tie"
-      else
-        winner = @vote_count_array.max
-      end
+    @vote_count_array = []
+    @candidate_name_array = []
+    @candidates.each do |candidate|
+      @vote_count_array << candidate.votes
     end
-    return winner
+    @candidates.each do |candidate|
+      @candidate_name_array << candidate.name
+    end
+    if @open == true
+      return false
+    elsif
+      @vote_count_array.sum == 0
+      return "tie"
+    else
+      index = @vote_count_array.find_index(@vote_count_array.max)
+      return @candidate_name_array[index]
+    end
+  end
+
+  def tie?
+    winners = @candidates.sort { |candidate| candidate.votes }
+    winners[-1].votes == winners[-2].votes
   end
 end

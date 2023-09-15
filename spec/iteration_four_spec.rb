@@ -27,7 +27,13 @@ RSpec.describe "#Candidate set up" do
     @race_1.close!
     expect(@race_1.winner).to eq("tie")
     @candidate_1.vote_for!
-    expect(@race_1.winner).to eq(@candidate_1)
+    expect(@race_1.winner).to eq(@candidate_1.name)
   end
 
+  it 'tells if there was a tie' do
+    @race_1.register_candidate!(@candidate_1)
+    @race_1.register_candidate!(@candidate_2)
+    @race_1.close!
+    expect(@race_1.tie?).to eq(true)
+  end
 end

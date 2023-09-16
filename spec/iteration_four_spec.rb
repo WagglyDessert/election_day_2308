@@ -20,8 +20,8 @@ RSpec.describe "#Candidate set up" do
   end
 
   it 'has a winner' do
-    @race_1.register_candidate!(@candidate_1)
-    @race_1.register_candidate!(@candidate_2)
+    @candidate_1 = @race_1.register_candidate!({name: "Diana D", party: :democrat})
+    @candidate_2 = @race_1.register_candidate!({name: "Roberto R", party: :republican})
     expect(@race_1.winner).to eq(false)
     @race_1.close!
     expect(@race_1.winner).to eq("tie")
@@ -31,16 +31,16 @@ RSpec.describe "#Candidate set up" do
   end
 
   it 'tells if there was a tie' do
-    @race_1.register_candidate!(@candidate_1)
-    @race_1.register_candidate!(@candidate_2)
+    @candidate_1 = @race_1.register_candidate!({name: "Diana D", party: :democrat})
+    @candidate_2 = @race_1.register_candidate!({name: "Roberto R", party: :republican})
     @race_1.close!
     expect(@race_1.tie?).to eq(true)
   end
 
   it 'holds an array of winning candidates' do
-    @election.add_races(@race_1)
-    @race_1.register_candidate!(@candidate_1)
-    @race_1.register_candidate!(@candidate_2)
+    @election.add_race(@race_1)
+    @candidate_1 = @race_1.register_candidate!({name: "Diana D", party: :democrat})
+    @candidate_2 = @race_1.register_candidate!({name: "Roberto R", party: :republican})
     expect(@election.winners).to eq([])
     @race_1.close!
     expect(@election.winners).to eq([])

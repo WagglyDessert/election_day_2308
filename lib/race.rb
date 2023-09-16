@@ -7,11 +7,13 @@ class Race
   end
 
   def register_candidate!(candidate)
+    candidate = Candidate.new(candidate)
     @candidates << candidate
+    candidate
   end
 
   def open?
-    @open = true
+    @open
   end
 
   def close!
@@ -38,6 +40,22 @@ class Race
       return winner
     end
   end
+
+  # def winner
+  #   return false if @open
+  #   @candidates.max_by { |candidate| candidate.votes }
+  # end
+
+  # def winner
+  #   return false if @open
+  #   sorted_votes = @candidates.sort_by { |candidate| candidate.votes }
+    
+  #   if sorted_votes[0].votes == sorted_votes[1].votes
+  #     return "It's a tie!"
+  #   else
+  #     return sorted_votes[-1]
+  #   end
+  # end
 
   def tie?
     winners = @candidates.sort { |candidate| candidate.votes }

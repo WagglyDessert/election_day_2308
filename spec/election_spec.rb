@@ -19,23 +19,23 @@ RSpec.describe "#Candidate set up" do
 
   it 'can add races' do
     expect(@election.races).to eq([])
-    @election.add_races(@race_1)
+    @election.add_race(@race_1)
     expect(@election.races).to eq([@race_1])
     @race_2 = Race.new("Colorado Governor")
-    @election.add_races(@race_2)
+    @election.add_race(@race_2)
     expect(@election.races).to eq([@race_1, @race_2])
   end
 
   it 'has candidates' do
-    @election.add_races(@race_1)
-    @race_1.register_candidate!(@candidate_1)
+    @election.add_race(@race_1)
+    @candidate_1 = @race_1.register_candidate!({name: "Diana D", party: :democrat})
     expect(@race_1.candidates).to eq([@candidate_1])
     expect(@election.candidates).to eq([@candidate_1])
   end
 
   it 'creates a hash of candidate votes' do
-    @election.add_races(@race_1)
-    @race_1.register_candidate!(@candidate_1)
+    @election.add_race(@race_1)
+    @candidate_1 = @race_1.register_candidate!({name: "Diana D", party: :democrat})
     #require 'pry';binding.pry
     expect(@election.vote_counts).to eq({@candidate_1.name => 0})
     @candidate_1.vote_for!
